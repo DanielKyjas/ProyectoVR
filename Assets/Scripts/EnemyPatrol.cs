@@ -7,8 +7,11 @@ public class EnemyPatrol : MonoBehaviour
 {
     [SerializeField] private Transform[] patrolPoints;
     [SerializeField] private int targetPoint;
+    [SerializeField] private int randomPoint;
     [SerializeField] private int speed;
     [SerializeField] private Position PalyerPos;
+    [SerializeField] private GameObject direccion;
+ 
     
     void Start()
     {
@@ -24,13 +27,18 @@ public class EnemyPatrol : MonoBehaviour
         }
         transform.position = Vector3.MoveTowards(transform.position, patrolPoints[targetPoint].position, speed * Time.deltaTime);
     }
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("giro"))
+        {
+            transform.Rotate(0,180,0);
+        }
+    }
+    
     void increaseTargetInt()
     {
-        targetPoint++;
-        if (targetPoint == 6)
-        {
-            targetPoint = 0;
-        }
+        randomPoint = Random.Range(0, 6);
+        targetPoint = randomPoint;
+
     }
 }

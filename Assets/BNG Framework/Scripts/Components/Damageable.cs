@@ -89,13 +89,7 @@ namespace BNG {
                 initialWasKinematic = rigid.isKinematic;
             }
         }
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("giro"))
-            {
-                DestroyThis();
-            }
-        }
+      
         public virtual void DealDamage(float damageAmount) {
             DealDamage(damageAmount, transform.position);
         }

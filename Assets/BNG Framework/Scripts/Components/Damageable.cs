@@ -69,7 +69,7 @@ namespace BNG {
 
         [Tooltip("Optional Event to be called once the object has been respawned, if Respawn is true and after RespawnTime")]
         public UnityEvent onRespawn;
-
+        [SerializeField] private EnemyPatrol enemy;
 #if INVECTOR_BASIC || INVECTOR_AI_TEMPLATE
         // Invector damage integration
         [Header("Invector Integration")]
@@ -89,7 +89,13 @@ namespace BNG {
                 initialWasKinematic = rigid.isKinematic;
             }
         }
-
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("giro"))
+            {
+                DestroyThis();
+            }
+        }
         public virtual void DealDamage(float damageAmount) {
             DealDamage(damageAmount, transform.position);
         }
@@ -183,6 +189,7 @@ namespace BNG {
                     GameObject.Destroy(decal.gameObject);
                 }
             }
+            enemy.stay = true;
         }
 
         IEnumerator RespawnRoutine(float seconds) {
@@ -191,6 +198,7 @@ namespace BNG {
 
             Health = _startingHealth;
             destroyed = false;
+            enemy.stay = false;
 
             // Deactivate
             foreach (var go in ActivateGameObjectsOnDeath) {
@@ -216,4 +224,5 @@ namespace BNG {
             }
         }
     }
+    
 }

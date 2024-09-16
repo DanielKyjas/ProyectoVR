@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+
 public class EnemyPatrol : MonoBehaviour
 {
     [SerializeField] private Transform[] patrolPoints;
@@ -11,6 +12,8 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] private int speed;
     [SerializeField] private Position PalyerPos;
     [SerializeField] private GameObject direccion;
+    
+    public bool stay = false;
  
     
     void Start()
@@ -21,11 +24,17 @@ public class EnemyPatrol : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+         
         if(transform.position == patrolPoints[targetPoint].position)
         {
-            increaseTargetInt();
+            if (!stay)
+            {
+                increaseTargetInt();
+            }
         }
         transform.position = Vector3.MoveTowards(transform.position, patrolPoints[targetPoint].position, speed * Time.deltaTime);
+
+       
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -41,4 +50,5 @@ public class EnemyPatrol : MonoBehaviour
         targetPoint = randomPoint;
 
     }
+    
 }

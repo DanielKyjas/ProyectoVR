@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     private int points = 0;
     [SerializeField] private TextMeshProUGUI textPoints;
+    [SerializeField] private TextMeshProUGUI highScoreText;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,5 +23,16 @@ public class GameManager : MonoBehaviour
     {
         points += 100;
         textPoints.text = "" + points;
+
+        setHighScore();
+        
     }
+    private void setHighScore()
+    {
+        if(points > PlayerPrefs.GetInt("HighScore",0))
+        {
+            PlayerPrefs.SetInt("HighScore",points);
+        }
+    }
+
 }
